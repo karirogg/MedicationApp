@@ -1,0 +1,89 @@
+.dim-background {
+    background-color: rgba(0,0,0,.30);
+    height:100%;
+    width:100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index:99;
+}
+
+.add-window {
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 0 0 20px rgba(0,0,0,.15);
+    border-radius: 5px;
+    position:fixed;
+    width: 500px;
+    height:400px;
+    top:50%;
+    left:50%;
+    margin-left: -250px;
+    margin-top: -200px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.top {
+    width: 100%;
+    padding: 5px 0px;
+    text-align: center;
+    font-weight: bold;
+    background-color: lightgray;
+    position:relative;
+    top:0px;
+}
+
+
+input[type="text"] {
+    display: block;
+    width: 80%;
+    height: 5%;
+    font-size: 0.9em;
+    position: relative;
+    margin:30px auto;
+}
+
+.save {
+    position:absolute;
+    bottom: 30px;
+    right: 30px;
+    background-color: lightgreen;
+    border:none;
+    border-radius:5px;
+    width:80px;
+    height: 35px;
+    font-size: 15px;
+    color:black;
+}
+
+input[type="checkbox"] + label {
+    display: block;
+    margin:0.2em;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"] + label:before {
+    content: "\2714";
+    border: 1px solid lightgrey;
+    border-radius: 0.2em;
+    display: inline-block;
+    padding-left: 0.2em;
+    padding-bottom: 0.2em;
+    margin-right:0.7em;
+    margin-left: 40%;
+    width: 1em;
+    height: 1em;
+    vertical-align: bottom;
+    color: transparent;
+    transition: .2s;
+}
+
+input[type="checkbox"]:checked + label:before {
+    background-color: royalblue;
+    border-color: royalblue;
+}
