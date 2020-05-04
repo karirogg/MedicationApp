@@ -20,7 +20,7 @@ class Info extends Component {
             <div>
                 <button className="add-meds" onClick={this.toggleAdd}>Add</button>
                 {this.state.seen ? <AddWindow toggle={this.toggleAdd} /> : null}
-                <MedsTable />
+                <MedsTable key={0} id={0} />
             </div>
         );
     }

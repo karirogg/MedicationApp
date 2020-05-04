@@ -2,7 +2,7 @@
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
-    min-width: 300px;
+    min-width: 100px;
     overflow: hidden;
     border-radius: 5px 5px 0 0;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
@@ -10,6 +10,8 @@
     position:absolute;
     top:100px;
     left:200px;
+
+    white-space: nowrap;
 }
 
 .medication-info thead tr {
@@ -51,6 +53,7 @@
     font-size: 0.9em;
     font-weight: bold;
     color: white;
+    cursor: pointer;
 }
 
 .add-meds:active {
