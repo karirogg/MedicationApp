@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import deleteIcon from '../Images/DeleteIcon.svg';
 import '../CSS/NewDose.css';
 
 class NewDose extends Component {
@@ -19,12 +20,14 @@ class NewDose extends Component {
     }
 
     render() {
+        const availableAmounts = ["75mg", "150mg", "500mg"]
+
         return(<div className="new-dose">
         <div className="select-amount">
-            <select ref="amount" onChange={this.amountEdited}>
-                <option value="75mg" selected>75mg</option>
-                <option value="150mg">150mg</option>
-                <option value="500mg">500mg</option>
+            <select ref="amount" value={this.props.dose.amount} onChange={this.amountEdited}>
+                {availableAmounts.map((amount, i) => {
+                    return (<option key={i} value={amount}>{amount}</option>);
+                })}
             </select>
         </div>
         <div className="time-picker">
@@ -40,7 +43,7 @@ class NewDose extends Component {
                 <div className="min-down" onClick={() => {this.props.min_down(this.props.id)}} />
             </div>
         </div>
-        <button className="remove-element" onClick={() => (this.props.removeElementAtIndex(this.props.id))}>Eyða</button>
+        <div className="remove-element" onClick={() => (this.props.removeElementAtIndex(this.props.id))}><img src={deleteIcon} height="15" width="15" alt="Delete icon" /></div>
     </div>);
     }
 }

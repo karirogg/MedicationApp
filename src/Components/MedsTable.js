@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import '../CSS/Info.css';
+import '../CSS/MedsTable.css';
 
 class MedsTable extends Component {
     formatDate = (num) => {
@@ -65,24 +65,23 @@ class MedsTable extends Component {
                         <tr>
                             {timeLabels.length > 0 ? <th>Nafn</th> : null}
                             {timeLabels.length > 0 ? <th>Magn</th> : null}
-                            {timeLabels.map((time) => (<th>{time}</th>))}
+                            {timeLabels.map((time, i) => (<th key={i}>{time}</th>))}
                         </tr>
                     </thead>
                     <tbody>
                         {this.props.meds ? this.props.meds.map((med, i) => {
                             var k = 0;
                             return(<tr onClick={() => (this.props.toggleAdd(this.props.meds[i], i))} key={i}>
-                                    <td key={i}>{med.name}</td>
+                                    <td>{med.name}</td>
                                     <td>{this.summarizeAmounts(med.doses)}</td>
                                     {timeLabels.map((time, j) => {
                                         let value = "";
-                                        console.log(JSON.stringify(this.props.meds[i]));
                                         let dose = this.props.meds[i].doses[k];
                                         if (dose && (dose.hour + ":" + dose.minute) === time) {
                                             value = this.props.meds[i].doses[k].amount;
                                             k++;
                                         }
-                                        return(<td>{value}</td>);
+                                        return(<td key={j}>{value}</td>);
                                     })}
                                 </tr>);
                         }) : null}

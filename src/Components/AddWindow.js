@@ -101,7 +101,6 @@ class AddWindow extends Component {
     submitMeds = () => {
         var state_copy = JSON.parse(JSON.stringify(this.state));
         for(let i = 0; i< state_copy.doses.length; i++) {
-            console.log(this.formatDate(state_copy.doses[i].hour));
             state_copy.doses[i].hour = this.formatDate(state_copy.doses[i].hour);
             state_copy.doses[i].minute = this.formatDate(state_copy.doses[i].minute);
         }
@@ -128,7 +127,7 @@ class AddWindow extends Component {
     addDose = () => {
         this.setState({
             name: this.state.name,
-            doses: [...this.state.doses, {amount:"75mg", hour:"09", minute:"00"}]});
+            doses: [...this.state.doses, {amount: this.state.doses[this.state.doses.length-1].amount, hour:"09", minute:"00"}]});
     }
 
     render() {

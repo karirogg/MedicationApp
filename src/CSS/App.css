@@ -6,6 +6,11 @@
     top:0px;
 }
 
+.header h4 {
+    color: white;
+    margin-left: 100px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
