@@ -6,19 +6,14 @@ import {connect} from 'react-redux';
 import NewDose from './NewDose';
 
 class AddWindow extends Component {
-    constructor() {
-        super();
-
-        this.hour_fields = [];
-        this.minute_fields = [];
-    }
-
     state = {
-        doses:[{amount: "75mg", hour:"00", minute:"00", ind: 0}]
+        name: this.props.med.name,
+        doses: this.props.med.doses
     };
 
     formatDate = (num) => {
-        if(num < 10) return("0" + String(num));
+        if(String(num).length === 1) return("0" + String(num));
+        if(num === "") return("00");
         return(""+num);
     }
     hr_up = (i) => {
@@ -89,22 +84,42 @@ class AddWindow extends Component {
         state_copy.doses[i].amount = value;
         this.setState(state_copy);
     }
+    edit_name = (event) => {
+        let state_copy = JSON.parse(JSON.stringify(this.state));
+        state_copy.name = event.target.value;
+        this.setState(state_copy);
+    }
+
+    removeElementAtIndex = (i) => {
+        let state_copy = JSON.parse(JSON.stringify(this.state));
+        state_copy.doses.splice(i, 1);
+        this.setState(state_copy);
+    }
 
     submitMeds = () => {
-        var submit_name = this.refs.name_input.value;
+        var state_copy = JSON.parse(JSON.stringify(this.state));
+        for(let i = 0; i< state_copy.doses.length; i++) {
+            console.log(this.formatDate(state_copy.doses[i].hour));
+            state_copy.doses[i].hour = this.formatDate(state_copy.doses[i].hour);
+            state_copy.doses[i].minute = this.formatDate(state_copy.doses[i].minute);
+        }
 
-        if(submit_name) {
+        state_copy.doses.sort((a,b) => (parseInt(a.hour) - parseInt(b.hour) || parseInt(a.minute)-parseInt(b.minute)));
+
+        if(state_copy.name !== "") {
             this.props.toggle();
             this.props.addMeds({                    
-                name: submit_name,                
-                doses: this.state.doses,
+                name: state_copy.name,                
+                doses: state_copy.doses,
             });
         } else {
             alert("You cannot add empty medication");
         }
     }
     addDose = () => {
-        this.setState({doses: [...this.state.doses, {amount:"", hour:"00", minute:"00"}]});
+        this.setState({
+            name: this.state.name,
+            doses: [...this.state.doses, {amount:"75mg", hour:"09", minute:"00"}]});
     }
 
     render() {
@@ -113,13 +128,14 @@ class AddWindow extends Component {
                 <div className='dim-background' onClick={this.props.toggle}></div>
                 <div className='add-window'>
                     <div className="top"><p>Bæta við lyfjagjöf</p></div>
-                    <input type="text" ref="name_input" placeholder="Nafn lyfs" />
-                    <button className="add-dose" onClick={this.addDose}>Nýr skammtur</button>
+                    <input type="text" className="name-input" onChange={this.edit_name} placeholder="Nafn lyfs" value={this.state.name} />
                     {this.state.doses.map((dose, i) => {
-                        return(<NewDose key={i} id={i} dose={dose} hr_up={this.hr_up} hr_down={this.hr_down} min_up={this.min_up} min_down={this.min_down} edit_minute={this.edit_minute} edit_hour={this.edit_hour} edit_amount={this.edit_amount} />);
+                        return(<NewDose key={i} id={i} dose={dose} hr_up={this.hr_up} hr_down={this.hr_down} min_up={this.min_up} min_down={this.min_down} edit_minute={this.edit_minute} edit_hour={this.edit_hour} edit_amount={this.edit_amount} removeElementAtIndex={this.removeElementAtIndex} />);
                     })}
-                    <button className="save" type="submit" onClick={this.submitMeds}>Vista</button>
-                    <p className="error_message"></p>
+                    <div className="button-holder">
+                        <button className="add-dose" onClick={this.addDose}>Nýr skammtur</button>
+                        <button className="save" type="submit" onClick={this.submitMeds}>Vista</button>
+                    </div>
                 </div>
             </div>
         )

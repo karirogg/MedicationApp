@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../CSS/NewDose.css';
 
 class NewDose extends Component {
     hourEdited = (event) => {
@@ -19,8 +20,14 @@ class NewDose extends Component {
 
     render() {
         return(<div className="new-dose">
-        <input type="text" className="amount" placeholder="Magn" onChange={this.amountEdited.bind(this)} />
-        <div className="time-picker" data-time="00:00">
+        <div className="select-amount">
+            <select ref="amount" onChange={this.amountEdited}>
+                <option value="75mg" selected>75mg</option>
+                <option value="150mg">150mg</option>
+                <option value="500mg">500mg</option>
+            </select>
+        </div>
+        <div className="time-picker">
             <div className="hour">
                 <div className="hr-up" onClick={() => {this.props.hr_up(this.props.id)}} />
                 <input type="text" ref={(ref) => this.hour_input = ref} className="hr" onChange={this.hourEdited.bind(this)} value={this.props.dose.hour} max="99" />
@@ -33,6 +40,7 @@ class NewDose extends Component {
                 <div className="min-down" onClick={() => {this.props.min_down(this.props.id)}} />
             </div>
         </div>
+        <button className="remove-element" onClick={() => (this.props.removeElementAtIndex(this.props.id))}>Eyða</button>
     </div>);
     }
 }

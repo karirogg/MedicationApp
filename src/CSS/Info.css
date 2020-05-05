@@ -29,8 +29,12 @@
     border-bottom: 1px solid lightgray;
 }
 
-.medication-info tr th:nth-of-type(2),td:nth-of-type(2) {
+.medication-info tr td, th {
     border-right: 1px solid lightgray;
+}
+
+.medication-info tr td:nth-of-type(1), th:nth-of-type(1) {
+    border-right: none;
 }
 
 .medication-info tbody tr:last-of-type {

@@ -4,10 +4,9 @@ import '../CSS/Info.css';
 
 class MedsTable extends Component {
     formatDate = (num) => {
-        if(num < 10) return("0" + String(num));
+        if(parseInt(num) < 10) return("0" + String(num));
         return(""+num);
     }
-
     // Needs optimizing, think about sorting etc.
     relevantTimelabels = () => {
         let relevant = [];
@@ -31,7 +30,6 @@ class MedsTable extends Component {
         }
         return(relevant)
     }
-
     // Needs optimizing, think about sorting etc.
     summarizeAmounts = (doses) => {
         let count = [];
@@ -73,7 +71,7 @@ class MedsTable extends Component {
                     <tbody>
                         {this.props.meds ? this.props.meds.map((med, i) => {
                             var k = 0;
-                            return(<tr key={i}>
+                            return(<tr onClick={() => (this.props.toggleAdd(this.props.meds[i]))} key={i}>
                                     <td key={i}>{med.name}</td>
                                     <td>{this.summarizeAmounts(med.doses)}</td>
                                     {timeLabels.map((time, j) => {
