@@ -129,6 +129,16 @@ input[type="number"]::-webkit-outer-spin-button {
     border-top-color: lightgray;
 }
 
+.time-picker .hour .hr-up:after,
+.time-picker .hour .hr-down:after,
+.time-picker .minute .min-up:after,
+.time-picker .minute .min-down:after {
+    content:'';
+    position:absolute;
+    top:-10px; bottom:-10px; 
+    left:-10px; right:-10px; 
+}
+
 .remove-element {
     background-color: red;
     border:none;
