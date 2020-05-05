@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import '../CSS/AddWindow.css';
 import {addMeds} from '../Actions/add-meds-action';
+import {editMeds} from '../Actions/edit-meds-action';
+import {deleteMeds} from '../Actions/delete-meds-action';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import NewDose from './NewDose';
@@ -8,7 +10,7 @@ import NewDose from './NewDose';
 class AddWindow extends Component {
     state = {
         name: this.props.med.name,
-        doses: this.props.med.doses
+        doses: this.props.med.doses, 
     };
 
     formatDate = (num) => {
@@ -107,11 +109,18 @@ class AddWindow extends Component {
         state_copy.doses.sort((a,b) => (parseInt(a.hour) - parseInt(b.hour) || parseInt(a.minute)-parseInt(b.minute)));
 
         if(state_copy.name !== "") {
-            this.props.toggle();
-            this.props.addMeds({                    
-                name: state_copy.name,                
-                doses: state_copy.doses,
-            });
+            this.props.toggleAdd();
+            if(this.props.index === -1) {
+                this.props.addMeds({                    
+                    name: state_copy.name,                
+                    doses: state_copy.doses,
+                });
+            } else {
+                this.props.editMeds({                    
+                    name: state_copy.name,                
+                    doses: state_copy.doses,
+                }, this.props.index);
+            }
         } else {
             alert("You cannot add empty medication");
         }
@@ -125,7 +134,7 @@ class AddWindow extends Component {
     render() {
         return(
             <div>
-                <div className='dim-background' onClick={this.props.toggle}></div>
+                <div className='dim-background' onClick={this.props.toggleAdd}></div>
                 <div className='add-window'>
                     <div className="top"><p>Bæta við lyfjagjöf</p></div>
                     <input type="text" className="name-input" onChange={this.edit_name} placeholder="Nafn lyfs" value={this.state.name} />
@@ -134,6 +143,10 @@ class AddWindow extends Component {
                     })}
                     <div className="button-holder">
                         <button className="add-dose" onClick={this.addDose}>Nýr skammtur</button>
+                        {(this.props.index >= 0) ? <button className="delete-medication" onClick={() => {
+                            this.props.toggleAdd();
+                            this.props.deleteMeds(this.props.index);
+                        }}>Eyða</button> : null}
                         <button className="save" type="submit" onClick={this.submitMeds}>Vista</button>
                     </div>
                 </div>
@@ -143,7 +156,7 @@ class AddWindow extends Component {
 }
 
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({addMeds: addMeds}, dispatch);
+    return bindActionCreators({addMeds: addMeds, editMeds: editMeds, deleteMeds: deleteMeds}, dispatch);
 }
 
 

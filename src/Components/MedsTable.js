@@ -71,7 +71,7 @@ class MedsTable extends Component {
                     <tbody>
                         {this.props.meds ? this.props.meds.map((med, i) => {
                             var k = 0;
-                            return(<tr onClick={() => (this.props.toggleAdd(this.props.meds[i]))} key={i}>
+                            return(<tr onClick={() => (this.props.toggleAdd(this.props.meds[i], i))} key={i}>
                                     <td key={i}>{med.name}</td>
                                     <td>{this.summarizeAmounts(med.doses)}</td>
                                     {timeLabels.map((time, j) => {
